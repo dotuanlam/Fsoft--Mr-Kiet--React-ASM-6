@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import Login from "./pages/Login/index";
+import ListDetail from "./components/ListDetail/index";
+import NotFound from "./pages/NotFound";
+import DetailListCocktail from "./components/DetailListCocktail";
+import Card from "./components/Card";
+import PrivateRoute from "./components/PrivateRoute";
+import AuthRoute from "./components/AuthRoute";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<ListDetail />} />
+          <Route path="/card" element={<Card />} />
+          <Route path="/:id" element={<DetailListCocktail />} />
+        </Route>
+        <Route element={<AuthRoute />}>
+          <Route path="/login" element={<Login />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
 }
